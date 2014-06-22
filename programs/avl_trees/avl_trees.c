@@ -5,6 +5,8 @@
 
 #define SIZEOF(x) sizeof(x)/sizeof(x[0])
 
+extern node_t *ROOT_MAIN;
+
 int main(void)
 {
 	int i;
@@ -30,6 +32,7 @@ int main(void)
 		{
 			//only first pass comes here
 			ROOT = new;
+			ROOT_MAIN = ROOT;
 		}
 		else
 		{
@@ -38,7 +41,7 @@ int main(void)
 		printf("\n\n");
 	}
 	
-	treeToArray(disp_array, ROOT->parent, 1, SIZEOF(disp_array));
+	treeToArray(disp_array, ROOT_MAIN, 1, SIZEOF(disp_array));
 	dispTreeArray(disp_array, SIZEOF(disp_array));
 	printf("\n\n");
 	
@@ -51,6 +54,6 @@ int main(void)
 	treeToArray(disp_array, ROOT, 1, SIZEOF(disp_array));
 	dispTreeArray(disp_array, SIZEOF(disp_array));
 	*/
-	printf("\n\n%d\n", (ROOT->parent)->height);
+	printf("\n\n%d\n", (ROOT_MAIN)->height);
 	return 0;
 }

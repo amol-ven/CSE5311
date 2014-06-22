@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+node_t *ROOT_MAIN;
+
+
 /*
 node_t *createNode(node_t *parent, node_t *childL, node_t *childR, int key)
 {
@@ -201,7 +205,13 @@ int attachLeaf(node_t *new, node_t *root)
 				{
 					printf("rotate at %d", root->key);
 					rotate(root, LEFT);
+					if(root == ROOT_MAIN)
+					{
+						//if rotation is done at the MAIN ROOT then update the global variable ROOT_MAIN
+						ROOT_MAIN = root->parent;
+					}
 					root = root->parent;
+					
 					
 					//update heights
 					//first calculate height of root->childL [left child of the new root [aka the previous root] ]
