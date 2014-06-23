@@ -88,10 +88,40 @@ int rotate(node_t *root, int direction)
 		root->parent = root_l;			  printf("%d->parent = %d\n", V(root), V(root_l));
 		if(root_l->parent)
 		{
-		if((root_l->parent)->childL == root){(root_l->parent)->childL = root_l;    printf("X%d->childL = %d\n", V(((root_l->parent)->childL)), V(root_l));}
-		if((root_l->parent)->childR == root){(root_l->parent)->childR = root_l;    printf("Y%d->childR = %d\n", V(((root_l->parent))), V(root_l));}
+			if((root_l->parent)->childL == root){(root_l->parent)->childL = root_l;    printf("X%d->childL = %d\n", V(((root_l->parent))), V(root_l));}
+			if((root_l->parent)->childR == root){(root_l->parent)->childR = root_l;    printf("Y%d->childR = %d\n", V(((root_l->parent))), V(root_l));}
 		}
 	}
+	else
+	{
+		node_t *root_r, *root_r_l;
+		if(root->childR == NULL)
+		{
+			printf("cannot rotate. right child must exist.");
+			return -1;
+		}
+		root_r = root->childR;
+		root_r_l = root_r->childL;
+		
+		//Perform rotation
+		root->childR = root_r_l;		  printf("%d->childR = %d\n", V(root), 	V(root_r_l));
+		if(root_r_l){root_r_l->parent = root;     printf("%d->parent = %d\n", V(root_r_l), V(root));}
+		root_r->childL = root;			  printf("%d->childL = %d\n", V(root_r), V(root));
+		root_r->parent = root->parent;            printf("%d->parent = %d\n", V(root_r), V((root->parent)));
+		root->parent = root_r;			  printf("%d->parent = %d\n", V(root), V(root_r));
+		if(root_r->parent)
+		{
+			if((root_r->parent)->childL == root){(root_r->parent)->childL = root_r;    printf("X%d->childL = %d\n", V(((root_r->parent))), V(root_r));}
+			if((root_r->parent)->childR == root){(root_r->parent)->childR = root_r;    printf("Y%d->childR = %d\n", V(((root_r->parent))), V(root_r));}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 	/*else
 	{
 		if(root->childR == NULL)
