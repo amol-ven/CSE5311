@@ -10,7 +10,7 @@ extern node_t *ROOT_MAIN;
 int main(void)
 {
 	int i;
-	int data[] = {2, 1, 3,6, 8};
+	int data[] = {1, 5, 3};
 	
 	node_t *disp_array[50];
 	for(i=0; i<SIZEOF(disp_array); i++)

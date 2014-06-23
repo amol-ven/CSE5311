@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+#define V(x) (x)?(x)->key:-1
+
 /*
 node_t *createNode(node_t *parent, node_t *childL, node_t *childR, int key)
 {
@@ -21,10 +24,11 @@ node_t *createNode(int key)
 	node_t *new = (node_t *)malloc(sizeof(node_t));
 	if(new)
 	{
-		new->key 	= key;
-		new->childL = NULL;
-		new->childR = NULL;
-		new->parent = NULL;
+		new->key 	 = key;
+		new->childL  = NULL;
+		new->childR  = NULL;
+		new->parent  = NULL;
+		new->balance = 0;
 	}
 	return new;
 }
@@ -64,30 +68,38 @@ void treeToArray(node_t **arr, node_t *root, int offset, int max_array_length)
 
 int rotate(node_t *root, int direction)
 {
-	node_t *x, *T2;
+	
 	if(direction == RIGHT)
 	{
+		node_t *root_l, *root_l_r;
 		if(root->childL == NULL)
 		{
-			//canot rotate right. left child must exist.
+			printf("canot rotate right. left child must exist.");
 			return -1;
 		}
-		x = root->childL;
-		T2 = x->childR;
+		root_l = root->childL;
+		root_l_r = root_l->childR;
  
 		// Perform rotation
-		x->childR = root;
-		root->childL = T2;
-	
-		x->parent = root->parent;
-		root->parent = x;
-		if(T2)
+		root->childL = root_l_r;                  printf("%d->childL = %d\n", V(root), 	V(root_l_r));
+		if(root_l_r){root_l_r->parent = root;     printf("%d->parent = %d\n", V(root_l_r), V(root));}     
+		root_l->childR = root;			  printf("%d->childR = %d\n", V(root_l), V(root));
+		root_l->parent = root->parent;            printf("%d->parent = %d\n", V(root_l), V((root->parent)));
+		root->parent = root_l;			  printf("%d->parent = %d\n", V(root), V(root_l));
+		if(root_l->parent)
 		{
-			T2->parent = root;
+		if((root_l->parent)->childL == root){(root_l->parent)->childL = root_l;    printf("X%d->childL = %d\n", V(((root_l->parent)->childL)), V(root_l));}
+		if((root_l->parent)->childR == root){(root_l->parent)->childR = root_l;    printf("Y%d->childR = %d\n", V(((root_l->parent))), V(root_l));}
 		}
 	}
-	else
+	/*else
 	{
+		if(root->childR == NULL)
+		{
+			printf("canot rotate left. right child must exist.");
+			return -1;
+		}
+		
 		x = root->childR;
 		T2 = x->childL;
  
@@ -101,7 +113,7 @@ int rotate(node_t *root, int direction)
 		{
 			T2->parent = root;
 		}
-	}
+	}*/
 	return 0;
 }
 
@@ -137,6 +149,7 @@ int attachLeaf(node_t *new, node_t *root)
 			else
 			{
 				root->childL = new;
+				new->parent = root;
 			}
 		}
 		else
@@ -149,6 +162,7 @@ int attachLeaf(node_t *new, node_t *root)
 			else
 			{
 				root->childR = new;
+				new->parent = root;
 			}
 		}
 	}

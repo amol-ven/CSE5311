@@ -9,6 +9,7 @@ typedef struct node
 	struct node *parent;
 	struct node *childL, *childR;
 	int key;
+	int balance;						//balance = right-left
 }node_t;
 
 

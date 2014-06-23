@@ -6,7 +6,7 @@
 
 #define MAX(x,y) (x<y)?(y):(x)
 
-#define RETURN_HEIGHT_IF_NODE_EXISTS(x) (x==NULL)?0:x->height
+#define RETURN_HEIGHT_IF_NODE_EXISTS(x) (x==NULL)?-1:x->height
 
 typedef struct node
 {

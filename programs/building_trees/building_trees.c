@@ -8,7 +8,7 @@
 int main(void)
 {
 	int i;
-	int data[] = {1, 2, 4, 3, 8, 4, 0, 30, 9 ,78, 54, 32, 12};
+	int data[] = {5, 1, 3};
 	
 	node_t *disp_array[20];
 	for(i=0; i<SIZEOF(disp_array); i++)
@@ -41,14 +41,15 @@ int main(void)
 	treeToArray(disp_array, ROOT, 1, SIZEOF(disp_array));
 	dispTreeArray(disp_array, SIZEOF(disp_array));
 	printf("\n\n");
-	
-	rotate(ROOT, LEFT);
-	ROOT = ROOT->parent;
-	for(i=0; i<SIZEOF(disp_array); i++)
+	//printf("\n%d\n", (ROOT->childR)->key);
+	rotate(ROOT, RIGHT);
+	//ROOT = ROOT->parent;
+	/*for(i=0; i<SIZEOF(disp_array); i++)
 	{
 		disp_array[i] = NULL;
 	}
 	treeToArray(disp_array, ROOT, 1, SIZEOF(disp_array));
 	dispTreeArray(disp_array, SIZEOF(disp_array));
+	*/printf("\n%d\n", (ROOT)->key);
 	return 0;
 }
