@@ -13,3 +13,6 @@ all: $(TARGET).c
 	 
 run: $(TARGET)
 	 ./$(TARGET)
+
+clean: $(TARGET)
+		rm $(TARGET)

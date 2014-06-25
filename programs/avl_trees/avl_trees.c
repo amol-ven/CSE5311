@@ -10,7 +10,7 @@ extern node_t *ROOT_MAIN;
 int main(void)
 {
 	int i;
-	int data[] = {1, 5, 3};
+	int data[] = {1, 5, 3, 2, 7,	 4, 12, 15, 9};
 	
 	node_t *disp_array[50];
 	for(i=0; i<SIZEOF(disp_array); i++)
@@ -18,7 +18,7 @@ int main(void)
 		disp_array[i] = NULL;
 	}
 	
-	node_t *new=NULL, *ROOT=NULL;
+	node_t *new=NULL/*,  *ROOT=NULL*/;
 	
 	for(i=0; i<SIZEOF(data); i++)
 	{
@@ -28,15 +28,15 @@ int main(void)
 			printf("cannot create node");
 			exit(1);
 		}
-		if(ROOT==NULL)
+		if(ROOT_MAIN==NULL)
 		{
 			//only first pass comes here
-			ROOT = new;
-			ROOT_MAIN = ROOT;
+			//ROOT_ = new;
+			ROOT_MAIN = new;
 		}
 		else
 		{
-			attachLeaf(new, ROOT);
+			attachLeaf(new, ROOT_MAIN);
 		}
 		printf("\n\n");
 	}

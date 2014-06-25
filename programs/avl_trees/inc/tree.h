@@ -8,6 +8,15 @@
 
 #define RETURN_HEIGHT_IF_NODE_EXISTS(x) (x==NULL)?-1:x->height
 
+#define V(x) (x)?(x)->key:-1
+
+
+// ADJUST_HEIGHT macro requires the variables height_left and height_right to be defined for the scope and ready to be used. 
+#define ADJUST_HEIGHT(x) 	height_left = RETURN_HEIGHT_IF_NODE_EXISTS((x)->childL);   \
+							height_right = RETURN_HEIGHT_IF_NODE_EXISTS((x)->childR);  \
+							max_height = MAX(height_left, height_right);               \
+							(x)->height = 1 + max_height
+
 typedef struct node
 {
 	struct node *parent;

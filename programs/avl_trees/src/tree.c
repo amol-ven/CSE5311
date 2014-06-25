@@ -122,7 +122,7 @@ int rotate(node_t *root, int direction)
 		node_t *root_l, *root_l_r;
 		if(root->childL == NULL)
 		{
-			printf("canot rotate right. left child must exist.");
+			printf("canot rotate right. left child must exist.\n");
 			return -1;
 		}
 		root_l = root->childL;
@@ -145,7 +145,7 @@ int rotate(node_t *root, int direction)
 		node_t *root_r, *root_r_l;
 		if(root->childR == NULL)
 		{
-			printf("cannot rotate. right child must exist.");
+			printf("cannot rotate. right child must exist.\n");
 			return -1;
 		}
 		root_r = root->childR;
@@ -212,7 +212,7 @@ int attachLeaf(node_t *new, node_t *root)
 {
 	if(root)
 	{
-		printf("%d %d\n", new->key, root->key);
+		printf("%d %d %d\n", new->key, root->key, ROOT_MAIN->key);
 		if(new->key < root->key)
 		{
 			//goto left
@@ -226,6 +226,7 @@ int attachLeaf(node_t *new, node_t *root)
 			{
 				root->childL = new;
 				new->parent = root;
+				printf("%d attached to left of %d\n", new->key, root->key);
 			}
 		}
 		else
@@ -241,6 +242,7 @@ int attachLeaf(node_t *new, node_t *root)
 			{
 				root->childR = new;
 				new->parent = root;
+				printf("%d attached to right of %d\n", new->key, root->key);
 			}
 		}
 	}
@@ -276,11 +278,11 @@ int attachLeaf(node_t *new, node_t *root)
 		//int balance_factor = (root->childR)->height - (root->childL)->height;
 		int balance_factor = height_right - height_left;
 		printf("bftest: key=%d bf=%d\n", root->key, balance_factor);
-		if(balance_factor>1 || balance_factor<-1)
-		{
+		//if(balance_factor>1 || balance_factor<-1)
+		//{
 			//tree is unbalanced at this root.
 			//balance it by rotations.
-			if(balance_factor>0)
+			if(balance_factor>1)
 			{
 				//tree is leaning to the right
 				//Need to find out whether we need to so a single left rotation or a right left rotation.
@@ -293,38 +295,45 @@ int attachLeaf(node_t *new, node_t *root)
 				if(bal_fac_of_child<0)
 				{
 					//need a right left rotation.
-					printf("in_rotate right at %d", (root->childR)->key);
+					printf("in_rotate right at %d\n", (root->childR)->key);
 					printf("\nroot->childR = %d\n", (root->childR)->key);
 					rotate(root->childR, RIGHT);
 					printf("\nroot->childR = %d\n", (root->childR)->key);
 					//update heights
 					//first calculate height of root->childR->childR [previous right child of root]
 					//(root->childR)->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childR), RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childL) );
-				/*	height_left = RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childL);
+					
+					/*
+					height_left = RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childL);
 					height_right = RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childR);
 					max_height = MAX(height_left, height_right);
 					((root->childR)->childR)->height = 1 + max_height;
-					
+					*/
+					ADJUST_HEIGHT((root->childR)->childR);
 					
 					//now calculate height of root->childR  [the new right child of root]
 					//root->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS(root->childL), RETURN_HEIGHT_IF_NODE_EXISTS(root->childR) );
+					
+					/*
 					height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childL);
 					height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childR);
 					max_height = MAX(height_left, height_right);
 					(root->childR)->height = 1 + max_height;
+					*/
+					ADJUST_HEIGHT(root->childR);
 					
 					
 					//The remaining left rotation is done anyways below outside this 'if block'
 					//printf("rotate left at %d", root->key);  
 					//rotate(root, LEFT);
-				*/
+				
 				}
 					
 				
 				//int i;
 				//for(i=1; i<=balance_factor/2; i++)
 				//{
-					printf("rotate left at %d", root->key);
+					printf("rotate left at %d\n", root->key);
 					rotate(root, LEFT);
 					if(root == ROOT_MAIN)
 					{
@@ -337,29 +346,57 @@ int attachLeaf(node_t *new, node_t *root)
 					//update heights
 					//first calculate height of root->childL [left child of the new root [aka the previous root] ]
 					//(root->childL)->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childL), RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childR) );
+					/*
 					height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childL);
 					height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childR);
 					max_height = MAX(height_left, height_right);
 					(root->childL)->height = 1 + max_height;
-					
+					*/
+					ADJUST_HEIGHT(root->childL);
 					
 					//now calculate height of root  [the new root]
 					//root->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS(root->childL), RETURN_HEIGHT_IF_NODE_EXISTS(root->childR) );
+					/*
 					height_left = RETURN_HEIGHT_IF_NODE_EXISTS(root->childL);
 					height_right = RETURN_HEIGHT_IF_NODE_EXISTS(root->childR);
 					max_height = MAX(height_left, height_right);
 					root->height = 1 + max_height;
+					*/
+					ADJUST_HEIGHT(root);
 					
 				//}
 			}
-			else
+			else if(balance_factor<-1)
 			{
 				//tree is leaning to the left.
-				//balance it by rotations.
-				int i;
-				for(i=1; i<=-balance_factor/2; i++)
+				//Need to find out whether we need to so a single right rotation or a left right rotation.
+				//if the left child is right heavy then do left right rotation. Else a single right rotation.
+				
+				//int i;
+				//for(i=1; i<=-balance_factor/2; i++)
+				//{
+				height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childL);
+				height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childR);
+				int bal_fac_of_child = height_right-height_left;	
+					
+				if(bal_fac_of_child>0)
 				{
-					printf("rotate right at %d", root->key);
+					//need a left right rotation.
+					printf("in_rotate left at %d\n", (root->childL)->key);
+					printf("\nroot->childL = %d\n", (root->childL)->key);
+					rotate(root->childL, LEFT);
+					printf("\nroot->childL = %d\n", (root->childL)->key);
+					
+					
+					ADJUST_HEIGHT((root->childL)->childL);
+					
+					ADJUST_HEIGHT(root->childL);
+				}
+					
+					
+					
+						
+					printf("rotate right at %d\n", root->key);
 					rotate(root, RIGHT);
 					if(root == ROOT_MAIN)
 					{
@@ -372,21 +409,29 @@ int attachLeaf(node_t *new, node_t *root)
 					//update heights
 					//first calculate height of root->childR [left child of the new root [aka the previous root] ]
 					//(root->childR)->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childL), RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childR) );
+					/*
 					height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childL);
 					height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childR);
 					max_height = MAX(height_left, height_right);
 					(root->childR)->height = 1 + max_height;
+					*/
+					ADJUST_HEIGHT(root->childR);
 					
 					
 					//now calculate height of root  [the new root]
 					//root->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS(root->childL), RETURN_HEIGHT_IF_NODE_EXISTS(root->childR) );
+					/*
 					height_left = RETURN_HEIGHT_IF_NODE_EXISTS(root->childL);
 					height_right = RETURN_HEIGHT_IF_NODE_EXISTS(root->childR);
 					max_height = MAX(height_left, height_right);
 					root->height = 1 + max_height;
-				}
+					*/
+					ADJUST_HEIGHT(root);
+				
+				
+				//}
 			}
-		}
+		//}
 			
 	/*}
 	else if(root->childL==NULL)
