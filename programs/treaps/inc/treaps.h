@@ -27,6 +27,9 @@ void treeToArray(node_t **arr, node_t *root, int offset, int max_array_length);
 void dispTreeArray(/*node_t *root, */node_t **array, int max_array_length);
 
 
+void deleteNode(node_t *root, int deallocate_memory);
+
+
 
 
 

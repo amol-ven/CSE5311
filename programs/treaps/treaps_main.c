@@ -50,7 +50,16 @@ int main(void)
 	printf("\n\n");
 	
 	
-	printf("test treap\n");
+	deleteNode(ROOT_MAIN, 1);
+	
+	for(i=0; i<SIZEOF(disp_array); i++)
+	{
+		disp_array[i] = NULL;
+	}
+	treeToArray(disp_array, ROOT_MAIN, 1, SIZEOF(disp_array));
+	dispTreeArray(disp_array, SIZEOF(disp_array));
+	printf("\n\n");
+	
 	
 	return 0;
 }

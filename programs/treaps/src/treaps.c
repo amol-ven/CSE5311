@@ -420,3 +420,77 @@ int attachLeaf(node_t *new, node_t *root)
 	
 	return 0;							//successfully added a leaf
 }
+
+void deleteNode(node_t *root, int deallocate_memory)
+{
+	while(1) //the condition to break out of this loop is mentioned later
+	{
+		if(root->childL==NULL && root->childR!=NULL)
+		{
+			//only left child doesnt exist. rotate left.
+			printf("rotate left at %c\n", root->key_tree);
+			rotate(root, LEFT);
+			if(root == ROOT_MAIN)
+			{
+				ROOT_MAIN = root->parent;
+			}
+		}
+		else if(root->childL!=NULL && root->childR==NULL)
+		{
+			//only right child doesnt exist. rotate right.
+			printf("rotate right at %c\n", root->key_tree);
+			rotate(root, RIGHT);
+			if(root == ROOT_MAIN)
+			{
+				ROOT_MAIN = root->parent;
+			}
+		}
+		else if(root->childL!=NULL && root->childR!=NULL)
+		{
+			//both children exist.
+			if((root->childL)->key_heap < (root->childR)->key_heap)
+			{
+				//left child is smaller than right child. rotate left
+				printf("rotate left at %c\n", root->key_tree);
+				rotate(root, LEFT);
+				if(root == ROOT_MAIN)
+				{
+					ROOT_MAIN = root->parent;
+				}
+			}
+			else
+			{
+				//right child is smaller than right child. rotate right
+				printf("rotate right at %c\n", root->key_tree);
+				rotate(root, RIGHT);
+				if(root == ROOT_MAIN)
+				{
+					ROOT_MAIN = root->parent;
+				}
+			}
+		}
+		else
+		{
+			//no children exist. delete node.
+			if((root->parent)->childL == root)
+			{
+				(root->parent)->childL = NULL;
+			}
+			if((root->parent)->childR == root)
+			{
+				(root->parent)->childR = NULL;
+			}
+			if(deallocate_memory)
+			{
+				free(root);
+			}
+			break;
+		}
+	}
+}
+
+
+
+
+
+
