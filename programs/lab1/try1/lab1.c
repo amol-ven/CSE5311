@@ -18,8 +18,12 @@ typedef struct point
 }point_t;
 
 
+
+
+
 int main(void)
 {
+	/*
 	point_t data[] = {	
 						//x=heap, y=tree
 						{.x = 0, .y = 1},
@@ -28,6 +32,8 @@ int main(void)
 						{.x = 1, .y = 2},
 						{.x = 2, .y = 3}, 
 					};
+	*/
+	
 	int Dmin_sq = 0x7FFFFFFF;        //max integer
 	
 	
@@ -41,17 +47,60 @@ int main(void)
 	ROOT_MAIN = NULL;
 	node_t *new=NULL;
 	
+		
+	//GET input
+	//##################################################################
 	
 	
+	FILE *f = fopen("input1K.dat", "r");
 	
-	for(i=0; i<SIZEOF(data); i++)
+	if(!f)
 	{
+		printf("cannot open file.\n");
+		
+		exit(1);
+	}
+	
+	
+	int lines;
+	fscanf(f, "%d\n", &lines);
+	
+	point_t *data = (point_t *)malloc(lines*sizeof(point_t));
+	if(!data)
+	{
+		printf("cannot allocate memory\n");
+		exit(1);
+	}
+	
+	
+	
+	for(i=0; i<lines; i++)
+	{
+		//fscanf(f, "%c", &c);
+		//printf("%d : %c   %d\n", i, c, c);
+		
+		fscanf(f, "%d %d\n", &(data[i].x), &(data[i].y));
+		//printf("%d : %d   %d\n", i, data[i].x, data[i].y);
+	}
+	
+	//##################################################################
+	
+	
+	
+	
+	printf("LINES = %d\n", lines);	
+	
+	//printf("test %d\n", data[999].y);
+	for(i=0; i<50; i++)
+	{
+		
 		new = createNode(data[i].x, data[i].y);
 		if(!new)
 		{
 			printf("cannot create node");
 			exit(1);
 		}
+		
 		if(ROOT_MAIN==NULL)
 		{
 			//only first pass comes here
@@ -90,5 +139,6 @@ int main(void)
 	printf("Max Nodes: %d\n", max_nodes_count);
 	printf("Current Nodes: %d\n", current_nodes_count);
 	printf("\nClosest Points: (%d, %d) (%d, %d)\n", closest1x, closest1y, closest2x, closest2y);
+	printf("Closest Distance squared: %d\n", Dmin_sq);
 	return 0;
 }
