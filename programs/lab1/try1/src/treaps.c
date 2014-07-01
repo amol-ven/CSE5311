@@ -47,7 +47,7 @@ void treeToArray(node_t **arr, node_t *root, int offset, int max_array_length)
 	
 	if(root && ( (offset<<1)+1 < max_array_length) )
 	{
-		//printf("%2d ", root->key);
+		////printf("%2d ", root->key);
 		treeToArray(arr, root->childL, offset<<1, max_array_length);
 		treeToArray(arr, root->childR, (offset<<1) + 1, max_array_length);
 	
@@ -69,11 +69,11 @@ void dispTreeArray(/*node_t *root, */node_t **array, int max_array_length)
 	{
 		if(array[index]!=NULL)
 		{
-			printf("%d|%.2d,%.2d ", index, array[index]->key_heap, array[index]->key_tree);
+			//printf("%d|%.2d,%.2d ", index, array[index]->key_heap, array[index]->key_tree);
 		}
 		else
 		{
-			printf("%d|____ ", index);
+			//printf("%d|____ ", index);
 		}
 	}
 }
@@ -87,7 +87,7 @@ int rotate(node_t *root, int direction)
 		node_t *root_l, *root_l_r;
 		if(root->childL == NULL)
 		{
-			printf("canot rotate right. left child must exist.\n");
+			//printf("canot rotate right. left child must exist.\n");
 			return -1;
 		}
 		
@@ -97,15 +97,15 @@ int rotate(node_t *root, int direction)
 		root_l_r = root_l->childR;
  
 		// Perform rotation
-		root->childL = root_l_r;                  printf("%d->childL = %d\n", V(root), 	V(root_l_r));
-		if(root_l_r){root_l_r->parent = root;     printf("%d->parent = %d\n", V(root_l_r), V(root));}     
-		root_l->childR = root;			  printf("%d->childR = %d\n", V(root_l), V(root));
-		root_l->parent = root->parent;            printf("%d->parent = %d\n", V(root_l), V((root->parent)));
-		root->parent = root_l;			  printf("%d->parent = %d\n", V(root), V(root_l));
+		root->childL = root_l_r;                 /*//printf("%d->childL = %d\n", V(root), 	V(root_l_r))*/;
+		if(root_l_r){root_l_r->parent = root;    /*//printf("%d->parent = %d\n", V(root_l_r), V(root));*/}     
+		root_l->childR = root;			 /*//printf("%d->childR = %d\n", V(root_l), V(root))*/;
+		root_l->parent = root->parent;           /*//printf("%d->parent = %d\n", V(root_l), V((root->parent)))*/;
+		root->parent = root_l;			 /*//printf("%d->parent = %d\n", V(root), V(root_l))*/;
 		if(root_l->parent)
 		{
-			if((root_l->parent)->childL == root){(root_l->parent)->childL = root_l;    printf("X%d->childL = %d\n", V(((root_l->parent))), V(root_l));}
-			if((root_l->parent)->childR == root){(root_l->parent)->childR = root_l;    printf("Y%d->childR = %d\n", V(((root_l->parent))), V(root_l));}
+			if((root_l->parent)->childL == root){(root_l->parent)->childL = root_l;   /*//printf("X%d->childL = %d\n", V(((root_l->parent))), V(root_l));*/}
+			if((root_l->parent)->childR == root){(root_l->parent)->childR = root_l;   /*//printf("Y%d->childR = %d\n", V(((root_l->parent))), V(root_l));*/}
 		}
 	}
 	else
@@ -113,7 +113,7 @@ int rotate(node_t *root, int direction)
 		node_t *root_r, *root_r_l;
 		if(root->childR == NULL)
 		{
-			printf("cannot rotate. right child must exist.\n");
+			//printf("cannot rotate. right child must exist.\n");
 			return -1;
 		}
 		
@@ -123,22 +123,22 @@ int rotate(node_t *root, int direction)
 		root_r_l = root_r->childL;
 		
 		//Perform rotation
-		root->childR = root_r_l;		  printf("%d->childR = %d\n", V(root), 	V(root_r_l));
-		if(root_r_l){root_r_l->parent = root;     printf("%d->parent = %d\n", V(root_r_l), V(root));}
-		root_r->childL = root;			  printf("%d->childL = %d\n", V(root_r), V(root));
-		root_r->parent = root->parent;            printf("%d->parent = %d\n", V(root_r), V((root->parent)));
-		root->parent = root_r;			  printf("%d->parent = %d\n", V(root), V(root_r));
+		root->childR = root_r_l;		 /*//printf("%d->childR = %d\n", V(root), 	V(root_r_l))*/;
+		if(root_r_l){root_r_l->parent = root;    /*//printf("%d->parent = %d\n", V(root_r_l), V(root));*/}
+		root_r->childL = root;			 /*//printf("%d->childL = %d\n", V(root_r), V(root))*/;
+		root_r->parent = root->parent;           /*//printf("%d->parent = %d\n", V(root_r), V((root->parent)))*/;
+		root->parent = root_r;			 /*//printf("%d->parent = %d\n", V(root), V(root_r))*/;
 		if(root_r->parent)
 		{
-			if((root_r->parent)->childL == root){(root_r->parent)->childL = root_r;    printf("X%d->childL = %d\n", V(((root_r->parent))), V(root_r));}
-			if((root_r->parent)->childR == root){(root_r->parent)->childR = root_r;    printf("Y%d->childR = %d\n", V(((root_r->parent))), V(root_r));}
+			if((root_r->parent)->childL == root){(root_r->parent)->childL = root_r;   /*//printf("X%d->childL = %d\n", V(((root_r->parent))), V(root_r));*/}
+			if((root_r->parent)->childR == root){(root_r->parent)->childR = root_r;   /*//printf("Y%d->childR = %d\n", V(((root_r->parent))), V(root_r));*/}
 		}
 	}
 	/*else
 	{
 		if(root->childR == NULL)
 		{
-			printf("canot rotate left. right child must exist.");
+			//printf("canot rotate left. right child must exist.");
 			return -1;
 		}
 		
@@ -166,7 +166,7 @@ int attachLeaf(node_t *new, node_t *root)
 	//int operation_performed = NOP;
 	if(root)
 	{
-		printf("%d %d %d\n", new->key_tree, root->key_tree, ROOT_MAIN->key_tree);
+		//printf("%d %d %d\n", new->key_tree, root->key_tree, ROOT_MAIN->key_tree);
 		if(new->key_tree <= root->key_tree)
 		{
 			//goto left
@@ -180,7 +180,7 @@ int attachLeaf(node_t *new, node_t *root)
 			{
 				root->childL = new;
 				new->parent = root;
-				printf("%d attached to left of %d\n", new->key_tree, root->key_tree);
+				//printf("%d attached to left of %d\n", new->key_tree, root->key_tree);
 			}
 		}
 		else
@@ -196,14 +196,14 @@ int attachLeaf(node_t *new, node_t *root)
 			{
 				root->childR = new;
 				new->parent = root;
-				printf("%d attached to right of %d\n", new->key_tree, root->key_tree);
+				//printf("%d attached to right of %d\n", new->key_tree, root->key_tree);
 			}
 		}
 	}
 	else
 	{
 		//should never come here
-		printf("\n\n FATAL ERROR @1 \n\n");
+		//printf("\n\n FATAL ERROR @1 \n\n");
 		return -1;
 	}
 	
@@ -222,7 +222,7 @@ int attachLeaf(node_t *new, node_t *root)
 		if(root->key_heap > (root->childL)->key_heap)
 		{
 			//rotate right at root
-			printf("rotate right at %d\n", root->key_tree);
+			//printf("rotate right at %d\n", root->key_tree);
 			rotate(root, RIGHT);
 			root = root->parent;
 		}
@@ -232,7 +232,7 @@ int attachLeaf(node_t *new, node_t *root)
 		if(root->key_heap > (root->childR)->key_heap)
 		{
 			//rotate left at root
-			printf("rotate left at %d\n", root->key_tree);
+			//printf("rotate left at %d\n", root->key_tree);
 			rotate(root, LEFT);
 			root = root->parent;
 		}
@@ -241,198 +241,6 @@ int attachLeaf(node_t *new, node_t *root)
 	
 	
 	
-	
-	
-	
-	////##################################################################
-	////Update the height of all nodes once a leaf is added
-	//int height_left, height_right, max_height;
-	//height_left = RETURN_HEIGHT_IF_NODE_EXISTS(root->childL);
-	//height_right = RETURN_HEIGHT_IF_NODE_EXISTS(root->childR);
-	//max_height = MAX(height_left, height_right);
-	
-	//root->height = 1 + max_height;
-	////##################################################################
-	
-	////printf("%d\n", root->height);
-	
-	////if(root->childL!=NULL && root->childR!=NULL)
-	////{
-		////both children exist
-		////int balance_factor = (root->childR)->height - (root->childL)->height;
-		//int balance_factor = height_right - height_left;
-		//printf("bftest: key=%d bf=%d\n", root->key, balance_factor);
-		////if(balance_factor>1 || balance_factor<-1)
-		////{
-			////tree is unbalanced at this root.
-			////balance it by rotations.
-			//if(balance_factor>1)
-			//{
-				////tree is leaning to the right
-				////Need to find out whether we need to so a single left rotation or a right left rotation.
-				////if the right child is left heavy then do right left rotation. Else a single left rotation.
-				//height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childL);
-				//height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childR);
-				//int bal_fac_of_child = height_right-height_left;
-				
-				
-				//if(bal_fac_of_child<0)
-				//{
-					////need a right left rotation.
-					//printf("in_rotate right at %d\n", (root->childR)->key);
-					//printf("\nroot->childR = %d\n", (root->childR)->key);
-					//rotate(root->childR, RIGHT);
-					//printf("\nroot->childR = %d\n", (root->childR)->key);
-					////update heights
-					////first calculate height of root->childR->childR [previous right child of root]
-					////(root->childR)->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childR), RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childL) );
-					
-					///*
-					//height_left = RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childL);
-					//height_right = RETURN_HEIGHT_IF_NODE_EXISTS(((root->childR)->childR)->childR);
-					//max_height = MAX(height_left, height_right);
-					//((root->childR)->childR)->height = 1 + max_height;
-					//*/
-					//ADJUST_HEIGHT((root->childR)->childR);
-					
-					////now calculate height of root->childR  [the new right child of root]
-					////root->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS(root->childL), RETURN_HEIGHT_IF_NODE_EXISTS(root->childR) );
-					
-					///*
-					//height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childL);
-					//height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childR);
-					//max_height = MAX(height_left, height_right);
-					//(root->childR)->height = 1 + max_height;
-					//*/
-					//ADJUST_HEIGHT(root->childR);
-					
-					
-					////The remaining left rotation is done anyways below outside this 'if block'
-					////printf("rotate left at %d", root->key);  
-					////rotate(root, LEFT);
-				
-				//}
-					
-				
-				////int i;
-				////for(i=1; i<=balance_factor/2; i++)
-				////{
-					//printf("rotate left at %d\n", root->key);
-					//rotate(root, LEFT);
-					//if(root == ROOT_MAIN)
-					//{
-						////if rotation is done at the MAIN ROOT then update the global variable ROOT_MAIN
-						//ROOT_MAIN = root->parent;
-					//}
-					//root = root->parent;
-					
-					
-					////update heights
-					////first calculate height of root->childL [left child of the new root [aka the previous root] ]
-					////(root->childL)->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childL), RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childR) );
-					///*
-					//height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childL);
-					//height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childR);
-					//max_height = MAX(height_left, height_right);
-					//(root->childL)->height = 1 + max_height;
-					//*/
-					//ADJUST_HEIGHT(root->childL);
-					
-					////now calculate height of root  [the new root]
-					////root->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS(root->childL), RETURN_HEIGHT_IF_NODE_EXISTS(root->childR) );
-					///*
-					//height_left = RETURN_HEIGHT_IF_NODE_EXISTS(root->childL);
-					//height_right = RETURN_HEIGHT_IF_NODE_EXISTS(root->childR);
-					//max_height = MAX(height_left, height_right);
-					//root->height = 1 + max_height;
-					//*/
-					//ADJUST_HEIGHT(root);
-					
-				////}
-			//}
-			//else if(balance_factor<-1)
-			//{
-				////tree is leaning to the left.
-				////Need to find out whether we need to so a single right rotation or a left right rotation.
-				////if the left child is right heavy then do left right rotation. Else a single right rotation.
-				
-				////int i;
-				////for(i=1; i<=-balance_factor/2; i++)
-				////{
-				//height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childL);
-				//height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childL)->childR);
-				//int bal_fac_of_child = height_right-height_left;	
-					
-				//if(bal_fac_of_child>0)
-				//{
-					////need a left right rotation.
-					//printf("in_rotate left at %d\n", (root->childL)->key);
-					//printf("\nroot->childL = %d\n", (root->childL)->key);
-					//rotate(root->childL, LEFT);
-					//printf("\nroot->childL = %d\n", (root->childL)->key);
-					
-					
-					//ADJUST_HEIGHT((root->childL)->childL);
-					
-					//ADJUST_HEIGHT(root->childL);
-				//}
-					
-					
-					
-						
-					//printf("rotate right at %d\n", root->key);
-					//rotate(root, RIGHT);
-					//if(root == ROOT_MAIN)
-					//{
-						////if rotation is done at the MAIN ROOT then update the global variable ROOT_MAIN
-						//ROOT_MAIN = root->parent;
-					//}
-					//root = root->parent;
-					
-					
-					////update heights
-					////first calculate height of root->childR [left child of the new root [aka the previous root] ]
-					////(root->childR)->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childL), RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childR) );
-					///*
-					//height_left = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childL);
-					//height_right = RETURN_HEIGHT_IF_NODE_EXISTS((root->childR)->childR);
-					//max_height = MAX(height_left, height_right);
-					//(root->childR)->height = 1 + max_height;
-					//*/
-					//ADJUST_HEIGHT(root->childR);
-					
-					
-					////now calculate height of root  [the new root]
-					////root->height = 1 + MAX( RETURN_HEIGHT_IF_NODE_EXISTS(root->childL), RETURN_HEIGHT_IF_NODE_EXISTS(root->childR) );
-					///*
-					//height_left = RETURN_HEIGHT_IF_NODE_EXISTS(root->childL);
-					//height_right = RETURN_HEIGHT_IF_NODE_EXISTS(root->childR);
-					//max_height = MAX(height_left, height_right);
-					//root->height = 1 + max_height;
-					//*/
-					//ADJUST_HEIGHT(root);
-				
-				
-				////}
-			//}
-		////}
-			
-	///*}
-	//else if(root->childL==NULL)
-	//{
-		
-	//}
-	//else if(root->childR==NULL)
-	//{
-		////right child does not exist
-	//}
-	//else
-	//{
-		////should never come here
-		//printf("\n\n FATAL ERROR @2 \n\n");
-		//return -1;
-	//}
-	//*/
 	
 	return 0;							//successfully added a leaf
 }
@@ -444,7 +252,7 @@ void deleteNode(node_t *root, int deallocate_memory)
 		if(root->childL==NULL && root->childR!=NULL)
 		{
 			//only left child doesnt exist. rotate left.
-			printf("rotate left at %d\n", root->key_tree);
+			//printf("rotate left at %d\n", root->key_tree);
 			rotate(root, LEFT);
 			if(root == ROOT_MAIN)
 			{
@@ -454,7 +262,7 @@ void deleteNode(node_t *root, int deallocate_memory)
 		else if(root->childL!=NULL && root->childR==NULL)
 		{
 			//only right child doesnt exist. rotate right.
-			printf("rotate right at %d\n", root->key_tree);
+			//printf("rotate right at %d\n", root->key_tree);
 			rotate(root, RIGHT);
 			if(root == ROOT_MAIN)
 			{
@@ -467,7 +275,7 @@ void deleteNode(node_t *root, int deallocate_memory)
 			if((root->childL)->key_heap > (root->childR)->key_heap)
 			{
 				//left child is greater than right child. rotate left
-				printf("rotate left at %d\n", root->key_tree);
+				//printf("rotate left at %d\n", root->key_tree);
 				rotate(root, LEFT);
 				if(root == ROOT_MAIN)
 				{
@@ -477,7 +285,7 @@ void deleteNode(node_t *root, int deallocate_memory)
 			else
 			{
 				//right child is greater than left child. rotate right
-				printf("rotate right at %d\n", root->key_tree);
+				//printf("rotate right at %d\n", root->key_tree);
 				rotate(root, RIGHT);
 				if(root == ROOT_MAIN)
 				{
@@ -507,7 +315,7 @@ void deleteNode(node_t *root, int deallocate_memory)
 			}
 			else
 			{
-				printf("WTF  %d\n", root->key_tree);
+				//printf("WTF  %d\n", root->key_tree);
 				//sleep(1);
 			}
 		
@@ -526,13 +334,13 @@ int getDist_sq(node_t *n1, node_t *n2)
 void checkForRemovals(node_t *root, node_t *newest_node, int *dmin_sq)
 {
 	int d_sq = getDist_sq(root, newest_node);
-	printf("checking ... %d and %d : %d ? %d\n", root->key_tree, newest_node->key_tree, d_sq, *dmin_sq);
-	printf("decission: %d\n", (newest_node->key_heap-root->key_heap)*(newest_node->key_heap-root->key_heap));
+	//printf("checking ... %d and %d : %d ? %d\n", root->key_tree, newest_node->key_tree, d_sq, *dmin_sq);
+	//printf("decission: %d\n", (newest_node->key_heap-root->key_heap)*(newest_node->key_heap-root->key_heap));
 	//if( d_sq>(*dmin_sq) && root!=newest_node)
 	if( ( (newest_node->key_heap-root->key_heap)*(newest_node->key_heap-root->key_heap) )>(*dmin_sq) && root!=newest_node)
 	{
 		root->tag = REMOVE;
-		printf("%d marked for removal\n", root->key_tree);
+		//printf("%d marked for removal\n", root->key_tree);
 		
 	}
 	else
@@ -562,7 +370,7 @@ void checkForRemovals(node_t *root, node_t *newest_node, int *dmin_sq)
 
 node_t *removeNodes(node_t *root)
 {
-	printf("\nremoveNodes at %d\n", root->key_tree);
+	//printf("\nremoveNodes at %d\n", root->key_tree);
 	if(root->tag == REMOVE)
 	{
 		//deleteNode(root, 0);

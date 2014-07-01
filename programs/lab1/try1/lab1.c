@@ -69,7 +69,7 @@ int main(void)
 	//##################################################################
 	
 	
-	FILE *f = fopen("input1K.dat", "r");
+	FILE *f = fopen("input1M.dat", "r");
 	
 	if(!f)
 	{
@@ -144,7 +144,7 @@ int main(void)
 		
 		
 		
-		printf("\n\n");
+		//printf("\n\n");
 	}
 	
 	
