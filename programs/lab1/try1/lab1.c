@@ -18,6 +18,23 @@ typedef struct point
 }point_t;
 
 
+int compare(point_t *p1, point_t *p2)
+{
+	if(p1->x < p2->x)
+	{
+		return -1;
+	}
+	else if(p1->x > p2->x)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+
 
 
 
@@ -85,13 +102,13 @@ int main(void)
 	
 	//##################################################################
 	
-	
+	qsort(data, lines, sizeof(point_t), compare);
 	
 	
 	printf("LINES = %d\n", lines);	
 	
 	//printf("test %d\n", data[999].y);
-	for(i=0; i<50; i++)
+	for(i=0; i<lines; i++)
 	{
 		
 		new = createNode(data[i].x, data[i].y);
