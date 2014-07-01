@@ -89,5 +89,6 @@ int main(void)
 	printf("Right Rotations: %d\n", rotations_right_count);
 	printf("Max Nodes: %d\n", max_nodes_count);
 	printf("Current Nodes: %d\n", current_nodes_count);
+	printf("\nClosest Points: (%d, %d) (%d, %d)\n", closest1x, closest1y, closest2x, closest2y);
 	return 0;
 }

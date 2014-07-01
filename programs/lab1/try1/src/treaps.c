@@ -541,6 +541,10 @@ void checkForRemovals(node_t *root, node_t *newest_node, int *dmin_sq)
 		if( d_sq<(*dmin_sq) && root!=newest_node)
 		{
 			*dmin_sq = d_sq;
+			closest1x = root->key_heap;
+			closest1y = root->key_tree;
+			closest2x = newest_node->key_heap;
+			closest2y = newest_node->key_tree;
 		}
 	}
 	
