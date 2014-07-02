@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #include <treaps.h>
 
@@ -51,6 +52,9 @@ int main(void)
 					};
 	*/
 	
+	
+	clock_t start, end;
+	double qsort_time, sweep_time;
 	int Dmin_sq = 0x7FFFFFFF;        //max integer
 	
 	
@@ -102,12 +106,16 @@ int main(void)
 	
 	//##################################################################
 	
+	start = clock();
 	qsort(data, lines, sizeof(point_t), compare);
+	end = clock();
 	
+	qsort_time = (end-start)/(double)CLOCKS_PER_SEC;
 	
 	printf("LINES = %d\n", lines);	
 	
 	//printf("test %d\n", data[999].y);
+	start = clock();
 	for(i=0; i<lines; i++)
 	{
 		
@@ -146,7 +154,9 @@ int main(void)
 		
 		//printf("\n\n");
 	}
+	end = clock();
 	
+	sweep_time = (end-start)/(double)CLOCKS_PER_SEC;
 	
 	treeToArray(disp_array, ROOT_MAIN, 1, SIZEOF(disp_array));
 	dispTreeArray(disp_array, SIZEOF(disp_array));
@@ -154,8 +164,11 @@ int main(void)
 	printf("Left Rotations: %d\n", rotations_left_count);
 	printf("Right Rotations: %d\n", rotations_right_count);
 	printf("Max Nodes: %d\n", max_nodes_count);
-	printf("Current Nodes: %d\n", current_nodes_count);
+	//printf("Current Nodes: %d\n", current_nodes_count);
 	printf("\nClosest Points: (%d, %d) (%d, %d)\n", closest1x, closest1y, closest2x, closest2y);
 	printf("Closest Distance squared: %d\n", Dmin_sq);
+	printf("qsort time = %f s\n", qsort_time);
+	printf("sweep time = %f s\n", sweep_time);
+	
 	return 0;
 }

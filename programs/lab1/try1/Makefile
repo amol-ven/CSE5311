@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS = -Wall -I./inc/
+CFLAGS = -Wall -I./inc/ -O3
 
 SRCDIR = ./src
 
