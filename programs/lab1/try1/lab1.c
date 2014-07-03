@@ -81,7 +81,7 @@ int main(void)
 	
 
 	FILE *f = fopen("input1K.dat", "r");
-	 
+ 	 
 	if(!f)
 	{
 		printf("cannot open file.\n");
