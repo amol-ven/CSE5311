@@ -138,6 +138,7 @@ int main(void)
 	
 	for(i=0;i<lines-1; i++)
 	{
+	/*
 		if(data_random[i].x==data_random[i+1].x && data_random[i].y==data_random[i+1].y)
 		{
 			//duplicate points detected
@@ -145,7 +146,7 @@ int main(void)
 			continue;
 			
 		}
-		else
+		*///else
 		{
 			//not duplicate
 			data[not_duplicate_index].x = data_random[i].x;
