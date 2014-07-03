@@ -73,7 +73,7 @@ int main(void)
 	//##################################################################
 	
 	
-	FILE *f = fopen("input1M.dat", "r");
+	FILE *f = fopen("input1K.dat", "r");
 	
 	if(!f)
 	{
