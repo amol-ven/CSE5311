@@ -20,7 +20,12 @@ typedef struct point
 
 
 int compare(point_t *p1, point_t *p2)
+//int compare(void *a, void *b)
 {
+//	point_t *p1 = a;
+//	point_t *p2 = b;
+
+/*
 	if(p1->x < p2->x)
 	{
 		return -1;
@@ -33,6 +38,8 @@ int compare(point_t *p1, point_t *p2)
 	{
 		return 0;
 	}
+*/
+	return (p1->x - p2->x);
 }
 
 
@@ -72,7 +79,7 @@ int main(void)
 	//GET input
 	//##################################################################
 	
-	
+
 	FILE *f = fopen("input1K.dat", "r");
 	
 	if(!f)
@@ -86,13 +93,19 @@ int main(void)
 	int lines;
 	fscanf(f, "%d\n", &lines);
 	
-	point_t *data = (point_t *)malloc(lines*sizeof(point_t));
-	if(!data)
+	point_t *data_random = (point_t *)malloc(lines*sizeof(point_t));
+	if(!data_random)
 	{
 		printf("cannot allocate memory\n");
 		exit(1);
 	}
 	
+	point_t *data = (point_t *)malloc(lines*sizeof(point_t));
+	if(!data_random)
+	{
+		printf("cannot allocate memory\n");
+		exit(1);
+	}
 	
 	
 	for(i=0; i<lines; i++)
@@ -100,21 +113,50 @@ int main(void)
 		//fscanf(f, "%c", &c);
 		//printf("%d : %c   %d\n", i, c, c);
 		
-		fscanf(f, "%d %d\n", &(data[i].x), &(data[i].y));
+		fscanf(f, "%d %d\n", &(data_random[i].x), &(data_random[i].y));
 		//printf("%d : %d   %d\n", i, data[i].x, data[i].y);
 	}
 	
 	//##################################################################
 	
 	start = clock();
-	qsort(data, lines, sizeof(point_t), compare);
+	qsort(data_random, lines, sizeof(point_t), compare);
 	end = clock();
 	
 	qsort_time = (end-start)/(double)CLOCKS_PER_SEC;
 	
+/*
+	for(i=0;i<lines; i++)
+	{
+		printf("%d %d\n", data_random[i].x, data_random[i].y);
+	}
+*/
+	
+	int not_duplicate_index=0;
+	
+	for(i=0;i<lines-1; i++)
+	{
+	/*
+		if(data_random[i].x==data_random[i+1].x && data_random[i].y==data_random[i+1].y)
+		{
+			//duplicate points detected
+			//printf("dupli");
+			continue;
+			
+		}
+		*///else
+		{
+			//not duplicate
+			data[not_duplicate_index].x = data_random[i].x;
+			data[not_duplicate_index].y = data_random[i].y;
+			not_duplicate_index++;
+		}
+	}
+	
+	lines = ++not_duplicate_index;
 	printf("LINES = %d\n", lines);	
 	
-	//printf("test %d\n", data[999].y);
+	
 	start = clock();
 	for(i=0; i<lines; i++)
 	{
